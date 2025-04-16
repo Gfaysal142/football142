@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملاعب - موقع المباريات الرياضية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0d47a1;
+            --secondary-color: #1976d2;
+            --accent-color: #ff6f00;
+            --bg-color: #f5f7fa;
+            --text-color: #333;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .hero {
+            height: 300px;
+            background: url('/api/placeholder/1200/300') center/cover;
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin: 30px 0;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+        
+        .matches-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .match-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .match-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .match-header {
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            color: var(--white);
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .match-teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 45%;
+        }
+        
+        .team-logo {
+            width: 60px;
+            height: 60px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: var(--primary-color);
+        }
+        
+        .team-name {
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .versus {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        
+        .match-info {
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .match-detail {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .match-detail i {
+            color: var(--primary-color);
+            width: 20px;
+        }
+        
+        .match-actions {
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(13, 71, 161, 0.1);
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 20px;
+            flex: 1;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            color: #666;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 30px 0;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* المخطط البياني الدائري */
+        .pie-chart {
+            width: 100%;
+            height: 250px;
+            position: relative;
+        }
+        
+        /* التأثيرات والتحولات */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        /* التصميم المستجيب */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero {
+                height: 250px;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .stats-container {
+                flex-direction: column;
+            }
+            
+            .match-teams {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .team {
+                width: 100%;
+            }
+            
+            .versus {
+                margin: 10px 0;
+            }
+        }
+
+        /* شكل الحلقة في المخطط الدائري */
+        .circle-chart {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+        }
+        
+        .circle-chart-circle {
+            stroke-linecap: round;
+            stroke-dasharray: 0, 100;
+            transition: stroke-dasharray 1s ease;
+        }
+        
+        .circle-chart-info {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            text-align: center;
+            transform: translateY(-50%);
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        /* الجدول */
+        .league-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .league-table th, .league-table td {
+            padding: 12px 15px;
+            text-align: center;
+        }
+        
+        .league-table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .league-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .league-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        
+        /* نموذج البحث */
+        .search-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-futbol"></i>
+                </div>
+                <div class="logo-text">الملاعب</div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> المباريات</a></li>
+                    <li><a href="#"><i class="fas fa-trophy"></i> البطولات</a></li>
+                    <li><a href="#"><i class="fas fa-newspaper"></i> الأخبار</a></li>
+                    <li><a href="#"><i class="fas fa-chart-line"></i> الإحصائيات</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="hero">
+        <div class="hero-overlay">
+            <h1>أهم مباريات اليوم</h1>
+            <p>تابع أحدث المباريات والنتائج مباشرة على موقع الملاعب</p>
+        </div>
+    </div>
+    
+    <main class="container">
+        <div class="search-form">
+            <input type="text" class="search-input" placeholder="ابحث عن فريق أو بطولة...">
+            <button class="btn btn-primary"><i class="fas fa-search"></i> بحث</button>
+        </div>
+        
+        <h2 class="section-title">مباريات اليوم</h2>
+        
+        <div class="matches-container">
+            <!-- المباراة الأولى -->
+            <div class="match-card fade-in">
+                <div class="match-header">
+                    <h3>الدوري الإسباني - الجولة 28</h3>
+                </div>
+                <div class="match-teams">
+                    <div class="team">
+                        <div class="team-logo">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="team-name">برشلونة</div>
+                    </div>
+                    <div class="versus">VS</div>
+                    <div class="team">
+                        <div class="team-logo">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="team-name">ريال مدريد</div>
+                    </div>
+                </div>
+                <div class="match-info">
+                    <div class="match-detail">
+                        <i class="far fa-clock"></i>
+                        <span>18:00 مساءً</span>
+                    </div>
+                    <div class="match-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>ملعب كامب نو</span>
+                    </div>
+                </div>
+                <div class="match-actions">
+                    <a href="#" class="btn btn-primary match-details-btn"><i class="fas fa-info-circle"></i> التفاصيل</a>
+                    <button class="btn btn-secondary reminder-btn"><i class="far fa-bell"></i> تذكير</button>
+                </div>
+            </div>
+            
+            <!-- المباراة الثانية -->
+            <div class="match-card fade-in" style="animation-delay: 0.2s">
+                <div class="match-header">
+                    <h3>دوري أبطال أوروبا - ربع النهائي</h3>
+                </div>
+                <div class="match-teams">
+                    <div class="team">
+                        <div class="team-logo">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="team-name">مانشستر سيتي</div>
+                    </div>
+                    <div class="versus">VS</div>
+                    <div class="team">
+                        <div class="team-logo">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="team-name">بايرن ميونخ</div>
+                    </div>
+                </div>
+                <div class="match-info">
+                    <div class="match-detail">
+                        <i class="far fa-clock"></i>
+                        <span>21:00 مساءً</span>
+                    </div>
+                    <div class="match-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>ملعب الاتحاد</span>
+                    </div>
+                </div>
+                <div class="match-actions">
+                    <a href="#" class="btn btn-primary match-details-btn"><i class="fas fa-info-circle"></i> التفاصيل</a>
+                    <button class="btn btn-secondary reminder-btn"><i class="far fa-bell"></i> تذكير</button>
+                </div>
+            </div>
+            
+            <!-- المباراة الثالثة -->
+            <div class="match-card fade-in" style="animation-delay: 0.4s">
+                <div class="match-header">
+                    <h3>الدوري الإنجليزي - الجولة 32</h3>
+                </div>
+                <div class="match-teams">
+                    <div class="team">
+                        <div class="team-logo">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="team-name">ليفربول</div>
+                    </div>
+                    <div class="versus">VS</div>
+                    <div class="team">
+                        <div class="team-logo">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="team-name">أرسنال</div>
+                    </div>
+                </div>
+                <div class="match-info">
+                    <div class="match-detail">
+                        <i class="far fa-clock"></i>
+                        <span>16:30 مساءً</span>
+                    </div>
+                    <div class="match-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>ملعب أنفيلد</span>
+                    </div>
+                </div>
+                <div class="match-actions">
+                    <a href="#" class="btn btn-primary match-details-btn"><i class="fas fa-info-circle"></i> التفاصيل</a>
+                    <button class="btn btn-secondary reminder-btn"><i class="far fa-bell"></i> تذكير</button>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">إحصائيات الفرق</h2>
+        
+        <div class="stats-container">
+            <div class="stat-card fade-in">
+                <i class="fas fa-futbol fa-2x" style="color: var(--primary-color)"></i>
+                <div class="stat-value">245</div>
+                <div class="stat-label">عدد الأهداف</div>
+                <div class="circle-chart">
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-bg"
+                            d="M18 2.0845
+                              a 15.9155 15.9155 0 0 1 0 31.831
+                              a 15.9155 15.9155 0 0 1 0 -31.831"
+                            fill="none"
+                            stroke="#eee"
+                            stroke-width="2"/>
+                        <path class="circle-chart-circle"
+                            stroke-dasharray="75, 100"
+                            d="M18 2.0845
+                              a 15.9155 15.9155 0 0 1 0 31.831
+                              a 15.9155 15.9155 0 0 1 0 -31.831"
+                            fill="none"
+                            stroke="#0d47a1"
+                            stroke-width="2"/>
+                    </svg>
+                    <div class="circle-chart-info">75%</div>
+                </div>
+            </div>
+            
+            <div class="stat-card fade-in" style="animation-delay: 0.2s">
+                <i class="fas fa-trophy fa-2x" style="color: var(--primary-color)"></i>
+                <div class="stat-value">32</div>
+                <div class="stat-label">عدد البطولات</div>
+                <div class="circle-chart">
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-bg"
+                            d="M18 2.0845
+                              a 15.9155 15.9155 0 0 1 0 31.831
+                              a 15.9155 15.9155 0 0 1 0 -31.831"
+                            fill="none"
+                            stroke="#eee"
+                            stroke-width="2"/>
+                        <path class="circle-chart-circle"
+                            stroke-dasharray="60, 100"
+                            d="M18 2.0845
+                              a 15.9155 15.9155 0 0 1 0 31.831
+                              a 15.9155 15.9155 0 0 1 0 -31.831"
+                            fill="none"
+                            stroke="#0d47a1"
+                            stroke-width="2"/>
+                    </svg>
+                    <div class="circle-chart-info">60%</div>
+                </div>
+            </div>
+            
+            <div class="stat-card fade-in" style="animation-delay: 0.4s">
+                <i class="fas fa-users fa-2x" style="color: var(--primary-color)"></i>
+                <div class="stat-value">18</div>
+                <div class="stat-label">عدد الفرق</div>
+                <div class="circle-chart">
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-bg"
+                            d="M18 2.0845
+                              a 15.9155 15.9155 0 0 1 0 31.831
+                              a 15.9155 15.9155 0 0 1 0 -31.831"
+                            fill="none"
+                            stroke="#eee"
+                            stroke-width="2"/>
+                        <path class="circle-chart-circle"
+                            stroke-dasharray="90, 100"
+                            d="M18 2.0845
+                              a 15.9155 15.9155 0 0 1 0 31.831
+                              a 15.9155 15.9155 0 0 1 0 -31.831"
+                            fill="none"
+                            stroke="#0d47a1"
+                            stroke-width="2"/>
+                    </svg>
+                    <div class="circle-chart-info">90%</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">جدول الدوري</h2>
+        
+        <table class="league-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>الفريق</th>
+                    <th>لعب</th>
+                    <th>فوز</th>
+                    <th>تعادل</th>
+                    <th>خسارة</th>
+                    <th>النقاط</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>الهلال</td>
+                    <td>28</td>
+                    <td>22</td>
+                    <td>4</td>
+                    <td>2</td>
+                    <td>70</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>النصر</td>
+                    <td>28</td>
+                    <td>20</td>
+                    <td>5</td>
+                    <td>3</td>
+                    <td>65</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>الأهلي</td>
+                    <td>28</td>
+                    <td>18</td>
+                    <td>6</td>
+                    <td>4</td>
+                    <td>60</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>الاتحاد</td>
+                    <td>28</td>
+                    <td>17</td>
+                    <td>7</td>
+                    <td>4</td>
+                    <td>58</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>الشباب</td>
+                    <td>28</td>
+                    <td>16</td>
+                    <td>6</td>
+                    <td>6</td>
+                    <td>54</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="#">الرئيسية</a></li>
+                        <li><a href="#">جدول المباريات</a></li>
+                        <li><a href="#">نتائج المباريات</a></li>
+                        <li><a href="#">أخبار الرياضة</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>البطولات</h3>
+                    <ul>
+                        <li><a href="#">دوري أبطال أوروبا</a></li>
+                        <li><a href="#">الدوري الإنجليزي</a></li>
+                        <li><a href="#">الدوري الإسباني</a></li>
+                        <li><a href="#">الدوري الإيطالي</a></li>
+                        <li><a href="#">الدوري السعودي</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>تواصل معنا</h3>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/faycel.142" target="_blank" class="social-icon bg-blue-600 p-5 rounded-full hover:bg-blue-700">
+                            <i class="fab fa-facebook-f text-2xl"></i>
+                        </a>
+                        <a href="https://www.instagram.com/faycel.142/" target="_blank" class="social-icon bg-gradient-to-br from-purple-600 to-pink-600 p-5 rounded-full">
+                            <i class="fab fa-instagram text-2xl"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@faycel_fgx" target="_blank" class="social-icon bg-black p-5 rounded-full hover:bg-gray-900">
+                            <i class="fab fa-tiktok text-2xl"></i>
+                        </a>
+                        <a href="mailto:faysalcommerce@gmail.com" class="social-icon bg-red-600 p-5 rounded-full hover:bg-red-700">
+                            <i class="fas fa-envelope text-2xl"></i>
+                        </a>
+                    </div>
+                    <p style="margin-top: 15px">اشترك في نشرتنا الإخبارية للحصول على آخر التحديثات</p>
+                    <div style="display: flex; margin-top: 10px;">
+                        <input type="email" placeholder="البريد الإلكتروني" style="flex: 1; padding: 10px; border: none; border-radius: 5px 0 0 5px;">
+                        <button class="btn btn-primary" style="border-radius: 0 5px 5px 0;">اشتراك</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>جميع الحقوق محفوظة &copy; 2025 - موقع الملاعب</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    // تأثير ظهور العناصر عند التمرير
+    const fadeElements = document.querySelectorAll('.fade-in');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = 1;
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    fadeElements.forEach(element => {
+        element.style.opacity = 0;
+        element.style.transform = 'translateY(20px)';
+        element.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+        observer.observe(element);
+    });
+    
+    // تنشيط الرسوم البيانية الدائرية
+    const circleCharts = document.querySelectorAll('.circle-chart-circle');
+    
+    setTimeout(() => {
+        circleCharts.forEach(chart => {
+            const value = chart.getAttribute('stroke-dasharray').split(',')[0];
+            chart.style.strokeDasharray = `0, 100`;
+            
+            setTimeout(() => {
+                chart.style.strokeDasharray = `${value}, 100`;
+            }, 300);
+        });
+    }, 1000);
+    
+    // تفاعل أزرار التفاصيل
+    const detailButtons = document.querySelectorAll('.match-details-btn');
+    
+    detailButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            
+            // الحصول على معلومات المباراة من العنصر الأب
+            const matchCard = button.closest('.match-card');
+            const teams = matchCard.querySelectorAll('.team-name');
+            const time = matchCard.querySelector('.match-detail span').textContent;
+            
+            // إنشاء مربع حوار للتفاصيل
+            showMatchDetails(teams[0].textContent, teams[1].textContent, time);
+        });
+    });
+    
+    // أزرار التذكير
+    const reminderButtons = document.querySelectorAll('.reminder-btn');
+    
+    reminderButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const icon = button.querySelector('i');
+            
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                button.style.backgroundColor = '#ff6f00';
+                button.style.borderColor = '#ff6f00';
+                button.style.color = 'white';
+                showNotification('تم تفعيل التذكير لهذه المباراة!');
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                button.style.backgroundColor = '';
+                button.style.borderColor = '';
+                button.style.color = '';
+                showNotification('تم إلغاء التذكير!');
+            }
+        });
+    });
+    
+    // محرك البحث
+    const searchInput = document.querySelector('.search-input');
+    
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.trim().toLowerCase();
+        const matchCards = document.querySelectorAll('.match-card');
+        
+        matchCards.forEach(card => {
+            const teamNames = card.querySelectorAll('.team-name');
+            const leagueName = card.querySelector('.match-header h3').textContent;
+            
+            const team1 = teamNames[0].textContent.toLowerCase();
+            const team2 = teamNames[1].textContent.toLowerCase();
+            const league = leagueName.toLowerCase();
+            
+            if (team1.includes(query) || team2.includes(query) || league.includes(query)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+    
+    // إنشاء مربع حوار التفاصيل
+    function showMatchDetails(team1, team2, time) {
+        // إنشاء عنصر مربع الحوار
+        const modal = document.createElement('div');
+        modal.className = 'match-modal';
+        modal.style.position = 'fixed';
+        modal.style.top = '0';
+        modal.style.left = '0';
+        modal.style.width = '100%';
+        modal.style.height = '100%';
+        modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
+        modal.style.display = 'flex';
+        modal.style.justifyContent = 'center';
+        modal.style.alignItems = 'center';
+        modal.style.zIndex = '1000';
+        
+        // محتوى مربع الحوار
+        const modalContent = document.createElement('div');
+        modalContent.style.width = '80%';
+        modalContent.style.maxWidth = '500px';
+        modalContent.style.backgroundColor = 'white';
+        modalContent.style.borderRadius = '10px';
+        modalContent.style.padding = '20px';
+        modalContent.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+        modalContent.style.position = 'relative';
+        modalContent.style.animation = 'modalFadeIn 0.3s ease-out forwards';
+        
+        // زر الإغلاق
+        const closeButton = document.createElement('button');
+        closeButton.innerHTML = '&times;';
+        closeButton.style.position = 'absolute';
+        closeButton.style.top = '10px';
+        closeButton.style.right = '10px';
+        closeButton.style.border = 'none';
+        closeButton.style.background = 'none';
+        closeButton.style.fontSize = '24px';
+        closeButton.style.cursor = 'pointer';
+        closeButton.style.color = '#333';
+        
+        // عنوان مربع الحوار
+        const modalTitle = document.createElement('h2');
+        modalTitle.textContent = `${team1} ضد ${team2}`;
+        modalTitle.style.textAlign = 'center';
+        modalTitle.style.marginBottom = '20px';
+        modalTitle.style.color = '#0d47a1';
+        
+        // معلومات المباراة
+        const matchTime = document.createElement('div');
+        matchTime.innerHTML = `<i class="far fa-clock" style="color: #0d47a1; margin-left: 10px;"></i> <strong>الموعد:</strong> ${time}`;
+        matchTime.style.marginBottom = '15px';
+        
+        const matchChannel = document.createElement('div');
+        matchChannel.innerHTML = `<i class="fas fa-tv" style="color: #0d47a1; margin-left: 10px;"></i> <strong>القناة الناقلة:</strong> beIN Sports 1`;
+        matchChannel.style.marginBottom = '15px';
+        
+        const matchReferee = document.createElement('div');
+        matchReferee.innerHTML = `<i class="fas fa-user" style="color: #0d47a1; margin-left: 10px;"></i> <strong>الحكم:</strong> بيير جاكوبس`;
+        matchReferee.style.marginBottom = '15px';
+        
+        // إحصائيات الفريقين
+        const statsTitle = document.createElement('h3');
+        statsTitle.textContent = 'إحصائيات الفريقين';
+        statsTitle.style.marginTop = '20px';
+        statsTitle.style.marginBottom = '15px';
+        statsTitle.style.color = '#0d47a1';
+        
+        const statsContainer = document.createElement('div');
+        
+        // إنشاء جدول الإحصائيات
+        const stats = [
+            { name: 'المباريات السابقة', team1: '20', team2: '18' },
+            { name: 'الانتصارات', team1: '12', team2: '10' },
+            { name: 'التعادلات', team1: '5', team2: '4' },
+            { name: 'الخسائر', team1: '3', team2: '4' }
+        ];
+        
+        const statsTable = document.createElement('table');
+        statsTable.style.width = '100%';
+        statsTable.style.borderCollapse = 'collapse';
+        statsTable.style.marginBottom = '20px';
+        
+        stats.forEach(stat => {
+            const row = document.createElement('tr');
+            
+            const team1Cell = document.createElement('td');
+            team1Cell.textContent = stat.team1;
+            team1Cell.style.textAlign = 'center';
+            team1Cell.style.padding = '8px';
+            team1Cell.style.width = '30%';
+            
+            const nameStat = document.createElement('td');
+            nameStat.textContent = stat.name;
+            nameStat.style.textAlign = 'center';
+            nameStat.style.padding = '8px';
+            nameStat.style.width = '40%';
+            
+            const team2Cell = document.createElement('td');
+            team2Cell.textContent = stat.team2;
+            team2Cell.style.textAlign = 'center';
+            team2Cell.style.padding = '8px';
+            team2Cell.style.width = '30%';
+            
+            row.appendChild(team1Cell);
+            row.appendChild(nameStat);
+            row.appendChild(team2Cell);
+            
+            statsTable.appendChild(row);
+        });
+        
+        statsContainer.appendChild(statsTable);
+        
+        // أزرار التفاعل
+        const buttonsContainer = document.createElement('div');
+        buttonsContainer.style.display = 'flex';
+        buttonsContainer.style.justifyContent = 'center';
+        buttonsContainer.style.gap = '10px';
+        buttonsContainer.style.marginTop = '20px';
+        
+        const liveButton = document.createElement('button');
+        liveButton.innerHTML = '<i class="fas fa-play-circle"></i> مشاهدة مباشرة';
+        liveButton.className = 'btn btn-primary';
+        liveButton.style.padding = '10px 15px';
+        
+        const lineupButton = document.createElement('button');
+        lineupButton.innerHTML = '<i class="fas fa-users"></i> التشكيلة المتوقعة';
+        lineupButton.className = 'btn btn-secondary';
+        
+        buttonsContainer.appendChild(liveButton);
+        buttonsContainer.appendChild(lineupButton);
+        
+        // إضافة المحتويات إلى مربع الحوار
+        modalContent.appendChild(closeButton);
+        modalContent.appendChild(modalTitle);
+        modalContent.appendChild(matchTime);
+        modalContent.appendChild(matchChannel);
+        modalContent.appendChild(matchReferee);
+        modalContent.appendChild(statsTitle);
+        modalContent.appendChild(statsContainer);
+        modalContent.appendChild(buttonsContainer);
+        
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+        
+        // إضافة CSS للحركة
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes modalFadeIn {
+                from { opacity: 0; transform: translateY(-50px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // إغلاق مربع الحوار عند النقر
+        closeButton.addEventListener('click', () => {
+            document.body.removeChild(modal);
+        });
+        
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                document.body.removeChild(modal);
+            }
+        });
+        
+        // زر التشكيلة المتوقعة
+        lineupButton.addEventListener('click', () => {
+            showLineup(team1, team2);
+        });
+    }
+    
+    // عرض التشكيلة المتوقعة
+    function showLineup(team1, team2) {
+        // إنشاء مربع حوار للتشكيلة
+        const modal = document.createElement('div');
+        modal.className = 'lineup-modal';
+        modal.style.position = 'fixed';
+        modal.style.top = '0';
+        modal.style.left = '0';
+        modal.style.width = '100%';
+        modal.style.height = '100%';
+        modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
+        modal.style.display = 'flex';
+        modal.style.justifyContent = 'center';
+        modal.style.alignItems = 'center';
+        modal.style.zIndex = '1000';
+        
+        // محتوى مربع الحوار
+        const modalContent = document.createElement('div');
+        modalContent.style.width = '90%';
+        modalContent.style.maxWidth = '800px';
+        modalContent.style.backgroundColor = 'white';
+        modalContent.style.borderRadius = '10px';
+        modalContent.style.padding = '20px';
+        modalContent.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+        modalContent.style.position = 'relative';
+        modalContent.style.animation = 'modalFadeIn 0.3s ease-out forwards';
+        
+        // زر الإغلاق
+        const closeButton = document.createElement('button');
+        closeButton.innerHTML = '&times;';
+        closeButton.style.position = 'absolute';
+        closeButton.style.top = '10px';
+        closeButton.style.right = '10px';
+        closeButton.style.border = 'none';
+        closeButton.style.background = 'none';
+        closeButton.style.fontSize = '24px';
+        closeButton.style.cursor = 'pointer';
+        closeButton.style.color = '#333';
+        
+        // عنوان مربع الحوار
+        const modalTitle = document.createElement('h2');
+        modalTitle.textContent = `التشكيلة المتوقعة: ${team1} و ${team2}`;
+        modalTitle.style.textAlign = 'center';
+        modalTitle.style.marginBottom = '20px';
+        modalTitle.style.color = '#0d47a1';
+        
+        // محتوى التشكيلة
+        const lineupContent = document.createElement('div');
+        lineupContent.style.display = 'flex';
+        lineupContent.style.flexDirection = 'column';
+        lineupContent.style.gap = '20px';
+        
+        // تشكيلة الفريق الأول
+        const team1Lineup = document.createElement('div');
+        team1Lineup.innerHTML = `
+            <h3>${team1}</h3>
+            <p><strong>طريقة اللعب:</strong> 4-3-3</p>
+            <p><strong>حارس المرمى:</strong> تير شتيجن</p>
+            <p><strong>خط الدفاع:</strong> بيكيه، أراوخو، ألبا، دست</p>
+            <p><strong>خط الوسط:</strong> بيدري، بوسكيتس، دي يونج</p>
+            <p><strong>خط الهجوم:</strong> ديمبلي، ليفاندوفسكي، رافينيا</p>
+            <p><strong>المدرب:</strong> تشافي هيرنانديز</p>
+        `;
+        team1Lineup.style.backgroundColor = '#f5f5f5';
+        team1Lineup.style.padding = '15px';
+        team1Lineup.style.borderRadius = '8px';
+        
+        // تشكيلة الفريق الثاني
+        const team2Lineup = document.createElement('div');
+        team2Lineup.innerHTML = `
+            <h3>${team2}</h3>
+            <p><strong>طريقة اللعب:</strong> 4-4-2</p>
+            <p><strong>حارس المرمى:</strong> كورتوا</p>
+            <p><strong>خط الدفاع:</strong> كارفاخال، ميليتاو، رودريجر، ميندي</p>
+            <p><strong>خط الوسط:</strong> فالفيردي، تشواميني، كروس، كاماڤينجا</p>
+            <p><strong>خط الهجوم:</strong> فينيسيوس، بنزيما</p>
+            <p><strong>المدرب:</strong> كارلو أنشيلوتي</p>
+        `;
+        team2Lineup.style.backgroundColor = '#f5f5f5';
+        team2Lineup.style.padding = '15px';
+        team2Lineup.style.borderRadius = '8px';
+        
+        lineupContent.appendChild(team1Lineup);
+        lineupContent.appendChild(team2Lineup);
+        
+        // إضافة المحتويات إلى مربع الحوار
+        modalContent.appendChild(closeButton);
+        modalContent.appendChild(modalTitle);
+        modalContent.appendChild(lineupContent);
+        
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+        
+        // إغلاق مربع الحوار عند النقر
+        closeButton.addEventListener('click', () => {
+            document.body.removeChild(modal);
+        });
+        
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                document.body.removeChild(modal);
+            }
+        });
+    }
+    
+    // إظهار الإشعارات
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.textContent = message;
+        notification.style.position = 'fixed';
+        notification.style.bottom = '20px';
+        notification.style.right = '20px';
+        notification.style.backgroundColor = '#0d47a1';
+        notification.style.color = 'white';
+        notification.style.padding = '10px 20px';
+        notification.style.borderRadius = '5px';
+        notification.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+        notification.style.zIndex = '1000';
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateY(20px)';
+        notification.style.transition = 'opacity 0.3s, transform 0.3s';
+        
+        document.body.appendChild(notification);
+        
+        // ظهور الإشعار
+        setTimeout(() => {
+            notification.style.opacity = '1';
+            notification.style.transform = 'translateY(0)';
+        }, 10);
+        
+        // إخفاء الإشعار بعد 3 ثواني
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            notification.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+    
+    // تحميل البيانات من خلال محاكاة طلب AJAX
+    function loadData() {
+        showNotification('جاري تحميل أحدث البيانات...');
+        
+        // محاكاة تأخير الطلب
+        setTimeout(() => {
+            showNotification('تم تحديث البيانات بنجاح!');
+        }, 1500);
+    }
+    
+    // تحديث البيانات تلقائياً كل فترة
+    setTimeout(loadData, 5000);
+    
+    // إضافة تأثير التمرير السلس للروابط
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+});
